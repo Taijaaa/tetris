@@ -51,6 +51,8 @@ public class Piece : MonoBehaviour
 
         board.Clear(this);
 
+        //this movement
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             HardDrop();
@@ -118,7 +120,7 @@ public class Piece : MonoBehaviour
             cells[i] = originalCells[i];
         }
     }
-
+    // do a flip
     bool TryWallKicks()
     {
         List<Vector2Int> wallKickOffsets = new List<Vector2Int>
@@ -145,6 +147,7 @@ public class Piece : MonoBehaviour
         return false;
     }
 
+    // do a spin
     void ApplyRotation(int direction)
     {
         Quaternion rotation = Quaternion.Euler(0, 0, direction * 90);

@@ -17,13 +17,14 @@ public class Board : MonoBehaviour
 
     float dropTime = 0.0f;
 
+    // this the sequence of how the tets should fall
     Tetronimo[] Sequence = { Tetronimo.U, Tetronimo.L, Tetronimo.L, Tetronimo.T, Tetronimo.O, Tetronimo.I, Tetronimo.U };
     int currentPiece = 0;
 
     Dictionary<Vector3Int, Piece> pieces = new Dictionary<Vector3Int, Piece>();
     Piece activePiece;
 
-    // Cache of the tiles that were already set on the Tilemap when the scene started
+    // tiles that were already set 
     private Dictionary<Vector3Int, TileBase> initialTiles = new Dictionary<Vector3Int, TileBase>();
     private BoundsInt initialBounds;
 
@@ -59,7 +60,7 @@ public class Board : MonoBehaviour
             }
         }
     }
-
+    // this save my preset tiles so they always come back
     private void CacheInitialTiles()
     {
         initialTiles.Clear();
@@ -72,7 +73,7 @@ public class Board : MonoBehaviour
                 initialTiles[pos] = t;
         }
     }
-
+    // this brings them back
     private void RestoreInitialTiles()
     {
         tilemap.ClearAllTiles();
@@ -103,7 +104,7 @@ public class Board : MonoBehaviour
         }
     }
 
-    // Call this when you want to restart after game over (your manager likely calls it)
+    // this restart 
     public void UpdateGameOver()
     {
         if (!tetrisManager.gameOver)
@@ -114,19 +115,18 @@ public class Board : MonoBehaviour
 
     void ResetBoard()
     {
-        // Destroy any active piece GameObjects
+        
         Piece[] foundPieces = FindObjectsByType<Piece>(FindObjectsSortMode.None);
         foreach (Piece piece in foundPieces) Destroy(piece.gameObject);
 
         activePiece = null;
 
-        // Restore the Tilemap to exactly what it looked like when the scene started
+        
         RestoreInitialTiles();
 
-        // Clear runtime bookkeeping
         pieces.Clear();
 
-        // Optional: restart the spawn sequence from the beginning
+       
         currentPiece = 0;
 
         SpawnPiece();
